@@ -1,0 +1,32 @@
+<br>
+<div class="text-center">
+  <button type="button" class="btn btn-primary toDoButton" (click)="changeType()">
+    <div *ngIf="showType">
+      Pokaż zrobione
+    </div>
+    <div *ngIf="!showType">
+      Pokaż do zrobienia
+    </div>
+  </button>
+</div>
+
+<br>
+<div>
+  <div *ngIf="showType">
+    <h2 class="font-italic border border-primary rounded-pill w-50">Do zrobienia</h2><br>
+    <div *ngFor="let task of toDoTasks; let i=index">
+      <div *ngIf="!task.isDone" class="font-italic taskText">
+        {{i+1}}. {{task.taskText}}
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="!showType">
+    <h2 class="font-italic border border-primary rounded-pill w-50">Zrobione</h2><br>
+    <div *ngFor="let task of doneTasks; let i=index">
+      <div *ngIf="task.isDone" class="font-italic taskText done">
+        {{i+1}}. {{task.taskText}}
+      </div>
+    </div>
+  </div>
+</div>

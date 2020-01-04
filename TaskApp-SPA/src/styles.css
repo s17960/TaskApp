@@ -1,1 +1,33 @@
 /* You can add global styles to this file, and also import other style files */
+@import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
+@import '../node_modules/font-awesome/css/font-awesome.min.css';
+
+body{
+    background-color: lightgray;
+}
+
+h1{
+    font-size: 75px;
+}
+
+.toDoButton{
+    font-size: 25px;
+}
+
+h2{
+    font-size: 50px;
+    background-color: lightblue;
+    margin: 0 auto;
+}
+
+.border{
+    border-width: 3px !important;
+}
+
+.taskText{
+    font-size: 30px;
+}
+
+.done{
+    text-decoration-line: line-through;
+}
