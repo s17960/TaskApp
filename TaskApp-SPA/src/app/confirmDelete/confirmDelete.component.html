@@ -1,0 +1,9 @@
+<button type="button" class="btn btn-danger deleteAllButton" (click)="openModal(template)">Usuń wszystko</button>
+<br><br>
+<ng-template #template>
+  <div class="modal-body text-center">
+    <p>Czy na pewno chcesz wszystko usunąć?</p>
+    <button type="button" class="btn btn-primary" (click)="confirm()" >Tak</button>
+    <button type="button" class="btn btn-default" (click)="decline()" >Nie</button>
+  </div>
+</ng-template>

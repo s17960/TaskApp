@@ -1,0 +1,7 @@
+<div>
+  <h3>Dodaj nowe zadanie</h3>
+  <form (ngSubmit)="addTask(newTask)">
+    <input type="text" name="newTask" [(ngModel)]="newTask" class="newTaskInput">
+    <button type="submit" class="btn btn-success addButton">Dodaj</button>
+  </form>
+</div>

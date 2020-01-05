@@ -1,0 +1,8 @@
+<button type="button" class="btn btn-warning allDoneButton" (click)="openModal(template)">Wszystko zrobione</button>
+<ng-template #template>
+  <div class="modal-body text-center">
+    <p>Czy na pewno chcesz oznaczyć wszystko jako zrobione?</p>
+    <button type="button" class="btn btn-primary" (click)="confirm()" >Tak</button>
+    <button type="button" class="btn btn-default" (click)="decline()" >Nie</button>
+  </div>
+</ng-template>

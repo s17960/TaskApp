@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Task } from '../_models/Task';
 import { Observable } from 'rxjs';
@@ -12,7 +12,9 @@ export class TaskComponent implements OnInit {
   url = 'http://localhost:5000/api/task'
   doneTasks: Task[];
   toDoTasks: Task[];
-  showType: boolean = true;
+  showDone: boolean = false;
+  editedTaskText: string;
+
 
   constructor(private http: HttpClient) { }
 
@@ -38,7 +40,65 @@ export class TaskComponent implements OnInit {
   }
 
   changeType() {
-    this.showType = !this.showType;
+    for(let i=0;i<this.toDoTasks.length;i++){
+      this.toDoTasks[i].editMode = false;
+    }
+    this.showDone = !this.showDone;
   }
 
+  setTaskDone(id: number) {
+    this.http.put(this.url + '/done/' + id, null).subscribe(() => {
+      this.ngOnInit();
+      }, error => {
+      console.log(error);
+    })
+  }
+
+  deleteTask(id: number) {
+    this.http.delete(this.url + '/' + id).subscribe(() => {
+      this.getToDoTasks();
+      this.getDoneTasks();
+    }), error => {
+      console.log(error);
+    }
+  }
+
+  changeEditMode(id: number) {
+    for(let i=0;i<this.toDoTasks.length;i++){
+      this.toDoTasks[i].editMode = false;
+    }
+    this.toDoTasks[id].editMode = true;
+  }
+
+  changeTaskText(id: number, taskText: string) {
+    this.http.put(this.url + '/' + id + '/' + taskText, null).subscribe((response) => {
+      console.log(taskText);
+      console.log(response);
+      this.ngOnInit();
+    }, error => {
+      console.log(error);
+    })
+  }
+
+  deleteAllTasks(accepted:boolean, isDone: boolean){
+    if(accepted)
+    this.http.delete(this.url + '/isdone/' + isDone).subscribe(() => {
+      this.getToDoTasks();
+      this.getDoneTasks();
+    }, error => {
+      console.log(error);
+    })
+  }
+
+  setAllDone(accepted: boolean){
+    if(accepted){
+      this.http.put(this.url + '/alldone', null).subscribe(() => {
+        this.getToDoTasks();
+        this.getDoneTasks();
+      }, error => {
+        console.log(error);
+      })
+    }
+  }
+  
 }

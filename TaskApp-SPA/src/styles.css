@@ -3,7 +3,7 @@
 @import '../node_modules/font-awesome/css/font-awesome.min.css';
 
 body{
-    background-color: lightgray;
+    background-color: rgb(196, 229, 240);
 }
 
 h1{
@@ -26,8 +26,53 @@ h2{
 
 .taskText{
     font-size: 30px;
+    text-align: left;
+    display: inline-block;
+    width: 45%;
+    border-bottom-style: solid;
+    border-bottom-color: rgb(68, 126, 180);
+}
+
+.taskTextOnly{
+    font-size: 30px;
+    text-align: left;
+    display: inline-block;
+    width: 100%;
+    overflow-wrap: break-word;
+}
+
+.taskInput{
+    font-size: 20px;
+    text-align: left;
+    display: inline-block;
+    width: 45%;
+}
+
+.newTaskInput{
+    font-size: 30px;
 }
 
 .done{
     text-decoration-line: line-through;
+}
+
+.optionsButton{
+    margin-bottom: 15px;
+    display: inline-block;
+}
+
+.addButton{
+    font-size: 20px;
+    margin-bottom: 15px;
+    margin-left: 5px;
+}
+
+.allDoneButton{
+    margin-bottom: 20px;
+}
+
+.deleteAllButton{
+    margin-bottom: 20px;
+    margin-left: 10px;
+    margin-right: -34%;
 }

@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { Task } from './_models/Task';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +8,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'TaskApp-SPA';
 }
+
