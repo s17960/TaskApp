@@ -18,7 +18,7 @@ export class AddTaskComponent implements OnInit {
   }
 
   addTask(taskText: string){
-    if(taskText != '')
+    if(taskText != '' && taskText != undefined)
     this.http.post(this.url + '/' + taskText, null).subscribe(() => {
       this.addTaskEvent.emit('newTask');
       this.newTask = '';
