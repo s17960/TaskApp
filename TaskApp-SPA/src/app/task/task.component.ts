@@ -1,7 +1,7 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Task } from '../_models/Task';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 
 @Component({
   selector: 'app-task',
@@ -14,6 +14,7 @@ export class TaskComponent implements OnInit {
   toDoTasks: Task[];
   showDone: boolean = false;
   editedTaskText: string;
+  newTaskText: string = '';
 
 
   constructor(private http: HttpClient) { }
@@ -21,6 +22,7 @@ export class TaskComponent implements OnInit {
   ngOnInit() {
     this.getDoneTasks();
     this.getToDoTasks();
+    this.newTaskText = '';
   }
 
   getDoneTasks() {
@@ -60,13 +62,14 @@ export class TaskComponent implements OnInit {
       this.getDoneTasks();
     }), error => {
       console.log(error);
-    }
+    };
   }
 
   changeEditMode(id: number) {
     for(let i=0;i<this.toDoTasks.length;i++){
       this.toDoTasks[i].editMode = false;
     }
+    this.newTaskText = this.toDoTasks[id].taskText;
     this.toDoTasks[id].editMode = true;
   }
 
