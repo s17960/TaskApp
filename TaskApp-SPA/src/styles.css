@@ -2,82 +2,91 @@
 @import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 @import '../node_modules/font-awesome/css/font-awesome.min.css';
 
-body{
-    background-color: rgb(196, 229, 240);
+html{
+    height: 100%;
 }
 
-h1{
-    font-size: 75px;
+.background {
+  height: 100%;
+  background-image: linear-gradient(
+    to right,
+    rgb(184, 255, 240),
+    rgb(240, 191, 255)
+  );
 }
 
-.toDoButton{
-    font-size: 25px;
+body {
+  /* background-color: rgb(196, 229, 240); */
+  font-family: 'Marker Felt', fantasy;
 }
 
-h2{
-    font-size: 50px;
-    background-color: lightblue;
-    margin: 0 auto;
+h1 {
+  font-size: 75px;
 }
 
-.border{
-    border-width: 3px !important;
+.toDoButton {
+  font-size: 25px;
 }
 
-.taskText{
-    font-size: 30px;
-    text-align: left;
-    display: inline-block;
-    width: 45%;
-    border-bottom-style: solid;
-    border-bottom-color: rgb(68, 126, 180);
+h2 {
+  font-size: 50px;
+  background-color: rgb(196, 185, 226);
+  margin: 0 auto;
 }
 
-.taskTextOnly{
-    font-size: 30px;
-    text-align: left;
-    display: inline-block;
-    width: 100%;
-    overflow-wrap: break-word;
+.border {
+  border-width: 3px !important;
 }
 
-.taskInput{
-    font-size: 20px;
-    text-align: left;
-    display: inline-block;
-    width: 45%;
+.taskText {
+  font-size: 30px;
+  text-align: left;
+  display: inline-block;
+  width: 45%;
+  border-bottom-style: solid;
+  border-bottom-color: rgb(0, 0, 0);
 }
 
-.newTaskInput{
-    font-size: 30px;
+.taskTextOnly {
+  font-size: 30px;
+  text-align: left;
+  display: inline-block;
+  width: 100%;
+  overflow-wrap: break-word;
 }
 
-.done{
-    text-decoration-line: line-through;
+.taskInput {
+  font-size: 20px;
+  text-align: left;
+  display: inline-block;
+  width: 45%;
 }
 
-.optionsButton{
-    margin-bottom: 15px;
-    display: inline-block;
+.newTaskInput {
+  font-size: 30px;
 }
 
-.addButton{
-    font-size: 20px;
-    margin-bottom: 15px;
-    margin-left: 5px;
+.done {
+  text-decoration-line: line-through;
 }
 
-.allDoneButton{
-    margin-bottom: 20px;
+.optionsButton {
+  margin-bottom: 15px;
+  display: inline-block;
 }
 
-.deleteAllButton{
-    margin-bottom: 20px;
-    margin-left: 10px;
-    margin-right: -34%;
+.addButton {
+  font-size: 20px;
+  margin-bottom: 15px;
+  margin-left: 5px;
 }
 
-.error{
-    color: red;
-    font-size: 20px;
+.allDoneButton {
+  margin-bottom: 20px;
+}
+
+.deleteAllButton {
+  margin-bottom: 20px;
+  margin-left: 10px;
+  margin-right: -34%;
 }

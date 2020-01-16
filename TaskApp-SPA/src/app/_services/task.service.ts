@@ -16,21 +16,6 @@ export class TaskService {
     return this.http.get<Task[]>(this.url);
   }
 
-  getDoneTasks() {
-    return this.http.get<Task[]>(this.url + '/done');
-  }
-
-  getToDoTasks() {
-    this.http.get<Task[]>(this.url + '/todo').subscribe(
-      response => {
-        return response;
-      },
-      error => {
-        console.log(error);
-      }
-    );
-  }
-
   setTaskDone(id: number) {
     return this.http.put(this.url + '/done/' + id, null);
   }

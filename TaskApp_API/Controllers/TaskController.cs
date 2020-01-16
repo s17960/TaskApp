@@ -63,7 +63,9 @@ namespace TaskApp_API.Controllers
             await _context.Tasks.AddAsync(newTask);
             _context.SaveChanges();
 
-            return StatusCode(201, newTask);
+            var toDoTasks = await _context.Tasks.Where(x => x.IsDone == false).ToListAsync();
+
+            return StatusCode(201, toDoTasks);
         }
 
         // PUT api/task/5

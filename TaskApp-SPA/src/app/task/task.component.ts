@@ -30,6 +30,10 @@ export class TaskComponent implements OnInit {
     );
   }
 
+  getToDoTasks(toDoTasks: Task[]) {
+    this.toDoTasks = toDoTasks;
+  }
+
   changeType() {
     for (let i = 0; i < this.toDoTasks.length; i++) {
       this.toDoTasks[i].editMode = false;

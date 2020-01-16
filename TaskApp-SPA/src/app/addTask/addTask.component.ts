@@ -17,9 +17,10 @@ export class AddTaskComponent implements OnInit {
 
   addTask(taskText: string) {
     this.taskService.addTask(taskText).subscribe(
-      () => {
-        this.addTaskEvent.emit('newTask');
+      response => {
+        this.addTaskEvent.emit(response);
         this.newTask = '';
+        console.log(response);
       },
       error => {
         console.log(error);
