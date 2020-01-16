@@ -91,7 +91,6 @@ namespace TaskApp_API.Controllers
             await _context.SaveChangesAsync();
 
             return Ok(updatedTask);
-            
         }
 
         [HttpPut("alldone")]

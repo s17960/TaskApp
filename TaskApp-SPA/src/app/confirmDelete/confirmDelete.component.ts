@@ -1,4 +1,10 @@
-import { TemplateRef, Component, OnInit, Output, EventEmitter } from '@angular/core';
+import {
+  TemplateRef,
+  Component,
+  OnInit,
+  Output,
+  EventEmitter
+} from '@angular/core';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 
 @Component({
@@ -6,15 +12,13 @@ import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
   templateUrl: './confirmDelete.component.html',
   styleUrls: ['./confirmDelete.component.css']
 })
-
 export class ConfirmDeleteComponent implements OnInit {
   @Output() accepted = new EventEmitter<boolean>();
-
-  ngOnInit() {
-  }
-
   modalRef: BsModalRef;
-  constructor(private modalService: BsModalService) { }
+  
+  ngOnInit() {}
+
+  constructor(private modalService: BsModalService) {}
 
   openModal(template: TemplateRef<any>) {
     this.modalRef = this.modalService.show(template, { class: 'modal-sm' });

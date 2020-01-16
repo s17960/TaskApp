@@ -7,26 +7,25 @@ import { HttpClient } from '@angular/common/http';
   styleUrls: ['./addTask.component.css']
 })
 export class AddTaskComponent implements OnInit {
-  url = 'http://localhost:5000/api/task'
+  url = 'http://localhost:5000/api/task';
   @Output() addTaskEvent = new EventEmitter();
   newTask: string;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
-  ngOnInit() {
+  ngOnInit() {}
 
+  addTask(taskText: string) {
+    if (taskText !== '' && taskText !== undefined) {
+      this.http.post(this.url + '/' + taskText, null).subscribe(
+        () => {
+          this.addTaskEvent.emit('newTask');
+          this.newTask = '';
+        },
+        error => {
+          console.log(error);
+        }
+      );
+    }
   }
-
-  addTask(taskText: string){
-    if(taskText != '' && taskText != undefined)
-    this.http.post(this.url + '/' + taskText, null).subscribe(() => {
-      this.addTaskEvent.emit('newTask');
-      this.newTask = '';
-    }, error => {
-      console.log(error);
-    })
-  }
-
-
-
 }
