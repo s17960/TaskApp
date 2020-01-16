@@ -1,0 +1,43 @@
+<h2 class="font-italic border border-primary rounded-pill w-50">
+  Do zrobienia
+</h2>
+<br />
+
+<app-confirmDone (accepted)="setAllDone($event)"></app-confirmDone>
+<app-confirmDelete (accepted)="deleteAllTodoTasks($event)"></app-confirmDelete>
+
+<div *ngFor="let task of toDoTasks; let i = index">
+  <div *ngIf="!task.isDone" class="font-italic taskText">
+    <div *ngIf="!task.editMode" class="taskTextOnly">
+      {{ i + 1 }}.{{ task.taskText }}
+    </div>
+    <form *ngIf="task.editMode" class="taskInput" (ngSubmit)="changeTaskText(task.id, newTaskText)">
+      <input required type="text" name="taskText" #taskText="ngModel" [(ngModel)]="newTaskText"
+        placeholder="{{ task.taskText }}" />
+      <button [disabled]="taskText.errors?.required" type="submit"><i class="fa fa-check"></i></button>
+    </form>
+  </div>
+  <div class="btn-group" dropdown>
+    <button id="button-basic" dropdownToggle type="button" class="btn btn-primary dropdown-toggle optionsButton">
+      Opcje
+    </button>
+    <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu" role="menu">
+      <li role="menuitem">
+        <button class="dropdown-item" (click)="setTaskDone(task.id)">
+          <i class="fa fa-check"></i> Zrobione
+        </button>
+      </li>
+      <li role="menuitem">
+        <button class="dropdown-item" (click)="deleteTask(task.id)">
+          <i class="fa fa-close"></i> Usuń
+        </button>
+      </li>
+      <li class="divider dropdown-divider"></li>
+      <li role="menuitem">
+        <button class="dropdown-item" (click)="changeEditMode(i)">
+          <i class="fa fa-edit"></i> Edytuj
+        </button>
+      </li>
+    </ul>
+  </div>
+</div>

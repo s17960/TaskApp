@@ -11,7 +11,6 @@ export class TaskComponent implements OnInit {
   doneTasks: Task[];
   toDoTasks: Task[];
   showDone = false;
-  newTaskText = '';
 
   constructor(private taskService: TaskService) {}
 
@@ -36,72 +35,5 @@ export class TaskComponent implements OnInit {
       this.toDoTasks[i].editMode = false;
     }
     this.showDone = !this.showDone;
-  }
-
-  setTaskDone(id: number) {
-    this.taskService.setTaskDone(id).subscribe(
-      () => {
-        this.getTasks();
-      },
-      error => {
-        console.log(error);
-      }
-    );
-  }
-
-  deleteTask(id: number) {
-    this.taskService.deleteTask(id).subscribe(
-      () => {
-        this.getTasks();
-      },
-      error => {
-        console.log(error);
-      }
-    );
-  }
-
-  changeEditMode(id: number) {
-    for (let i = 0; i < this.toDoTasks.length; i++) {
-      this.toDoTasks[i].editMode = false;
-    }
-    this.newTaskText = this.toDoTasks[id].taskText;
-    this.toDoTasks[id].editMode = true;
-  }
-
-  changeTaskText(id: number, taskText: string) {
-    this.taskService.changeTaskText(id, taskText).subscribe(
-      () => {
-        this.getTasks();
-      },
-      error => {
-        console.log(error);
-      }
-    );
-  }
-
-  deleteAllTasks(accepted: boolean, isDone: boolean) {
-    if (accepted) {
-      this.taskService.deleteAllTasks(isDone).subscribe(
-        () => {
-          this.getTasks();
-        },
-        error => {
-          console.log(error);
-        }
-      );
-    }
-  }
-
-  setAllDone(accepted: boolean) {
-    if (accepted) {
-      this.taskService.setAllDone().subscribe(
-        () => {
-          this.getTasks();
-        },
-        error => {
-          console.log(error);
-        }
-      );
-    }
   }
 }

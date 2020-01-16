@@ -1,0 +1,25 @@
+<h2 class="font-italic border border-primary rounded-pill w-50">
+  Zrobione
+</h2>
+<br />
+
+<app-confirmDone [style.visibility]="'hidden'"></app-confirmDone>
+<app-confirmDelete (accepted)="deleteAllDoneTasks($event)"></app-confirmDelete>
+
+<div *ngFor="let task of doneTasks; let i = index">
+  <div *ngIf="task.isDone" class="font-italic taskText">
+    <div class="taskTextOnly done">{{ i + 1 }}.{{ task.taskText }}</div>
+  </div>
+  <div class="btn-group" dropdown>
+    <button id="button-basic" dropdownToggle type="button" class="btn btn-primary dropdown-toggle optionsButton">
+      Opcje
+    </button>
+    <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu" role="menu">
+      <li role="menuitem">
+        <button class="dropdown-item" (click)="deleteTask(task.id)">
+          <i class="fa fa-close"></i> Usuń
+        </button>
+      </li>
+    </ul>
+  </div>
+</div>

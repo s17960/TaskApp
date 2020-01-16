@@ -10,6 +10,8 @@ import { TaskComponent } from './task/task.component';
 import { AddTaskComponent } from './addTask/addTask.component';
 import { ConfirmDeleteComponent } from './confirmDelete/confirmDelete.component';
 import { ConfirmDoneComponent } from './confirmDone/confirmDone.component';
+import { TodoTaskComponent } from './todo-task/todo-task.component';
+import { DoneTaskComponent } from './done-task/done-task.component';
 
 
 @NgModule({
@@ -18,7 +20,9 @@ import { ConfirmDoneComponent } from './confirmDone/confirmDone.component';
       TaskComponent,
       AddTaskComponent,
       ConfirmDeleteComponent,
-      ConfirmDoneComponent
+      ConfirmDoneComponent,
+      TodoTaskComponent,
+      DoneTaskComponent
    ],
    imports: [
       BrowserModule,

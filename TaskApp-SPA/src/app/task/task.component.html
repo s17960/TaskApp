@@ -11,83 +11,11 @@
     </button>
   </div>
 
-  <br />
-  <app-addTask (addTaskEvent)="ngOnInit()" [style.visibility]="showDone ? 'hidden' : 'visible'" class="text-center">
-  </app-addTask>
-  <br />
-
   <div>
-    <div *ngIf="!showDone">
-      <h2 class="font-italic border border-primary rounded-pill w-50">
-        Do zrobienia
-      </h2>
-      <br />
-
-      <app-confirmDone (accepted)="setAllDone($event)"></app-confirmDone>
-      <app-confirmDelete (accepted)="deleteAllTasks($event, showDone)"></app-confirmDelete>
-
-      <div *ngFor="let task of toDoTasks; let i = index">
-        <div *ngIf="!task.isDone" class="font-italic taskText">
-          <div *ngIf="!task.editMode" class="taskTextOnly">
-            {{ i + 1 }}.{{ task.taskText }}
-          </div>
-          <form *ngIf="task.editMode" class="taskInput" (ngSubmit)="changeTaskText(task.id, newTaskText)">
-            <input required type="text" name="taskText" #taskText="ngModel" [(ngModel)]="newTaskText" placeholder="{{ task.taskText }}" />
-            <button [disabled]="taskText.errors?.required" type="submit"><i class="fa fa-check"></i></button>
-          </form>
-        </div>
-        <div class="btn-group" dropdown>
-          <button id="button-basic" dropdownToggle type="button" class="btn btn-primary dropdown-toggle optionsButton">
-            Opcje
-          </button>
-          <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu" role="menu">
-            <li role="menuitem">
-              <button class="dropdown-item" (click)="setTaskDone(task.id)">
-                <i class="fa fa-check"></i> Zrobione
-              </button>
-            </li>
-            <li role="menuitem">
-              <button class="dropdown-item" (click)="deleteTask(task.id)">
-                <i class="fa fa-close"></i> Usuń
-              </button>
-            </li>
-            <li class="divider dropdown-divider"></li>
-            <li role="menuitem">
-              <button class="dropdown-item" (click)="changeEditMode(i)">
-                <i class="fa fa-edit"></i> Edytuj
-              </button>
-            </li>
-          </ul>
-        </div>
-
-      </div>
-    </div>
-
-    <div *ngIf="showDone">
-      <h2 class="font-italic border border-primary rounded-pill w-50">
-        Zrobione
-      </h2>
-      <br />
-
-      <app-confirmDone [style.visibility]="'hidden'"></app-confirmDone>
-      <app-confirmDelete (accepted)="deleteAllTasks($event, showDone)"></app-confirmDelete>
-
-      <div *ngFor="let task of doneTasks; let i = index">
-        <div *ngIf="task.isDone" class="font-italic taskText">
-          <div class="taskTextOnly done">{{ i + 1 }}.{{ task.taskText }}</div>
-        </div>
-        <div class="btn-group" dropdown>
-          <button id="button-basic" dropdownToggle type="button" class="btn btn-primary dropdown-toggle optionsButton">
-            Opcje
-          </button>
-          <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu" role="menu">
-            <li role="menuitem">
-              <button class="dropdown-item" (click)="deleteTask(task.id)">
-                <i class="fa fa-close"></i> Usuń
-              </button>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </div>
+    <br />
+    <app-addTask (addTaskEvent)="ngOnInit()" [style.visibility]="showDone ? 'hidden' : 'visible'" class="text-center">
+    </app-addTask>
+    <br />
+    <app-todo-task *ngIf="!showDone" [toDoTasks]="toDoTasks" (reloadPage)="getTasks()"></app-todo-task>
+    <app-done-task *ngIf="showDone" [doneTasks]="doneTasks" (reloadPage)="getTasks()"></app-done-task>
   </div>
