@@ -1,7 +1,6 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { Task } from '../_models/Task';
-import { Observable, of } from 'rxjs';
+import { TaskService } from '../_services/task.service';
 
 @Component({
   selector: 'app-task',
@@ -9,35 +8,22 @@ import { Observable, of } from 'rxjs';
   styleUrls: ['./task.component.css']
 })
 export class TaskComponent implements OnInit {
-  url = 'http://localhost:5000/api/task';
   doneTasks: Task[];
   toDoTasks: Task[];
   showDone = false;
-  editedTaskText: string;
   newTaskText = '';
 
-  constructor(private http: HttpClient) {}
+  constructor(private taskService: TaskService) {}
 
   ngOnInit() {
-    this.getDoneTasks();
-    this.getToDoTasks();
+    this.getTasks();
   }
 
-  getDoneTasks() {
-    this.http.get<Task[]>(this.url + '/done').subscribe(
+  getTasks() {
+    this.taskService.getTasks().subscribe(
       response => {
-        this.doneTasks = response;
-      },
-      error => {
-        console.log(error);
-      }
-    );
-  }
-
-  getToDoTasks() {
-    this.http.get<Task[]>(this.url + '/todo').subscribe(
-      response => {
-        this.toDoTasks = response;
+        this.toDoTasks = response.filter(x => x.isDone == false);
+        this.doneTasks = response.filter(x => x.isDone == true);
       },
       error => {
         console.log(error);
@@ -53,9 +39,9 @@ export class TaskComponent implements OnInit {
   }
 
   setTaskDone(id: number) {
-    this.http.put(this.url + '/done/' + id, null).subscribe(
+    this.taskService.setTaskDone(id).subscribe(
       () => {
-        this.ngOnInit();
+        this.getTasks();
       },
       error => {
         console.log(error);
@@ -64,10 +50,9 @@ export class TaskComponent implements OnInit {
   }
 
   deleteTask(id: number) {
-    this.http.delete(this.url + '/' + id).subscribe(
+    this.taskService.deleteTask(id).subscribe(
       () => {
-        this.getToDoTasks();
-        this.getDoneTasks();
+        this.getTasks();
       },
       error => {
         console.log(error);
@@ -84,9 +69,9 @@ export class TaskComponent implements OnInit {
   }
 
   changeTaskText(id: number, taskText: string) {
-    this.http.put(this.url + '/' + id + '/' + taskText, null).subscribe(
-      response => {
-        this.ngOnInit();
+    this.taskService.changeTaskText(id, taskText).subscribe(
+      () => {
+        this.getTasks();
       },
       error => {
         console.log(error);
@@ -96,10 +81,9 @@ export class TaskComponent implements OnInit {
 
   deleteAllTasks(accepted: boolean, isDone: boolean) {
     if (accepted) {
-      this.http.delete(this.url + '/isdone/' + isDone).subscribe(
+      this.taskService.deleteAllTasks(isDone).subscribe(
         () => {
-          this.getToDoTasks();
-          this.getDoneTasks();
+          this.getTasks();
         },
         error => {
           console.log(error);
@@ -110,10 +94,9 @@ export class TaskComponent implements OnInit {
 
   setAllDone(accepted: boolean) {
     if (accepted) {
-      this.http.put(this.url + '/alldone', null).subscribe(
+      this.taskService.setAllDone().subscribe(
         () => {
-          this.getToDoTasks();
-          this.getDoneTasks();
+          this.getTasks();
         },
         error => {
           console.log(error);

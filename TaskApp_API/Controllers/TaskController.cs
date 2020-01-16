@@ -20,18 +20,9 @@ namespace TaskApp_API.Controllers
             _context = context;
         }
 
-        // GET api/task/done
-        [HttpGet("done")]
-        public async Task<IActionResult> GetDoneTasks()
-        {
-            var tasks = await _context.Tasks.Where(x => x.IsDone == true).ToListAsync();
-            return Ok(tasks);
-        }
-
-        [HttpGet("todo")]
-        public async Task<IActionResult> GetToDoTasks()
-        {
-            var tasks = await _context.Tasks.Where(x => x.IsDone == false).ToListAsync();
+        [HttpGet("")]
+        public async Task<IActionResult> GetTasks(){
+            var tasks = await _context.Tasks.ToListAsync();
             return Ok(tasks);
         }
 
