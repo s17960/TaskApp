@@ -13,7 +13,7 @@
 
   <div>
     <br />
-    <app-addTask (addTaskEvent)="ngOnInit()" [style.visibility]="showDone ? 'hidden' : 'visible'" class="text-center">
+    <app-addTask (addTaskEvent)="getTasks()" [style.visibility]="showDone ? 'hidden' : 'visible'" class="text-center">
     </app-addTask>
     <br />
     <app-todo-task *ngIf="!showDone" [toDoTasks]="toDoTasks" (reloadPage)="getTasks()"></app-todo-task>
