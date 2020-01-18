@@ -10,5 +10,7 @@ namespace TaskApp_API.models
         [MaxLength(40)]
         public string TaskText { get; set; }
         public bool IsDone { get; set; }
+
+        public User User { get; set; }
     }
 }

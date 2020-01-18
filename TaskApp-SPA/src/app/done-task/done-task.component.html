@@ -8,7 +8,7 @@
 
 <div *ngFor="let task of doneTasks; let i = index">
   <div *ngIf="task.isDone" class="font-italic taskText">
-    <div class="taskTextOnly done">{{ i + 1 }}.{{ task.taskText }}</div>
+    <div class="taskTextOnly done">{{ i + 1 }}. {{ task.taskText }}</div>
   </div>
   <div class="btn-group" dropdown>
     <button id="button-basic" dropdownToggle type="button" class="btn btn-primary dropdown-toggle optionsButton">

@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using TaskApp_API.Data;
@@ -9,20 +11,33 @@ using TaskApp_API.models;
 
 namespace TaskApp_API.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class TaskController : ControllerBase
     {
-        private DataContext _context { get; set; }
+        private readonly DataContext _context;
 
         public TaskController(DataContext context)
         {
             _context = context;
         }
 
-        [HttpGet("")]
-        public async Task<IActionResult> GetTasks(){
-            var tasks = await _context.Tasks.ToListAsync();
+        public bool IsUserAuthenticated(int userId)
+        {
+
+            return userId == int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+        }
+
+        [HttpGet("{userId:int}")]
+        public async Task<IActionResult> GetTasks(int userId)
+        {
+            if (!IsUserAuthenticated(userId))
+            {
+                return BadRequest();
+            }
+
+            var tasks = await _context.Tasks.Where(x => x.User.Id == userId).ToListAsync();
             return Ok(tasks);
         }
 
@@ -32,9 +47,9 @@ namespace TaskApp_API.Controllers
             var doneTask = _context.Tasks.FirstOrDefault(x => x.Id == id);
             doneTask.IsDone = true;
 
-            if(doneTask == null)
+            if (doneTask == null)
                 return NotFound();
-            
+
             _context.Tasks.Attach(doneTask);
             _context.Entry(doneTask).State = EntityState.Modified;
             await _context.SaveChangesAsync();
@@ -43,38 +58,43 @@ namespace TaskApp_API.Controllers
             return Ok(tasks);
         }
 
-        // GET api/task/5
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetTask(int id)
-        {
-            var task = await _context.Tasks.Where(x => x.Id == id).ToListAsync();
-            return Ok(task);
-        }
-
         // POST api/task
-        [HttpPost("{taskText}")]
-        public async Task<IActionResult> AddTask(string taskText)
+        [HttpPost("{userId:int}/{taskText}")]
+        public async Task<IActionResult> AddTask(int userId, string taskText)
         {
-            var newTask = new models.Task(){
+            if (!IsUserAuthenticated(userId))
+            {
+                return BadRequest();
+            }
+
+            var user = await _context.Users.FirstOrDefaultAsync(x => x.Id == userId);
+
+            var newTask = new models.Task()
+            {
                 TaskText = taskText,
-                IsDone = false
+                IsDone = false,
+                User = user
             };
 
             await _context.Tasks.AddAsync(newTask);
             _context.SaveChanges();
 
-            var toDoTasks = await _context.Tasks.Where(x => x.IsDone == false).ToListAsync();
+            var toDoTasks = await _context.Tasks.Where(x => x.IsDone == false && x.User.Id == userId).ToListAsync();
 
             return StatusCode(201, toDoTasks);
         }
 
         // PUT api/task/5
-        [HttpPut("{id}/{taskText}")]
-        public async Task<IActionResult> UpdateTask(int id, string taskText)
+        [HttpPut("{userId:int}/{taskId:int}/{taskText}")]
+        public async Task<IActionResult> UpdateTask(int userId, int taskId, string taskText)
         {
-            var updatedTask = _context.Tasks.FirstOrDefault(x => x.Id == id);
+            if(!IsUserAuthenticated(userId)){
+                return BadRequest();
+            }
 
-            if(updatedTask == null)
+            var updatedTask = _context.Tasks.FirstOrDefault(x => x.Id == taskId);
+
+            if (updatedTask == null)
                 return NotFound();
 
             updatedTask.TaskText = taskText;
@@ -86,9 +106,14 @@ namespace TaskApp_API.Controllers
             return Ok(updatedTask);
         }
 
-        [HttpPut("alldone")]
-        public async Task<IActionResult> SetAllDone(){
-            var toDoTasks = _context.Tasks.Where(x => x.IsDone == false).ToList();
+        [HttpPut("alldone/{userId}")]
+        public async Task<IActionResult> SetAllDone(int userId)
+        {
+            if (!IsUserAuthenticated(userId))
+            {
+                return BadRequest();
+            }
+            var toDoTasks = _context.Tasks.Where(x => x.IsDone == false && x.User.Id == userId).ToList();
             toDoTasks.ForEach(x => x.IsDone = true);
             await _context.SaveChangesAsync();
 
@@ -102,16 +127,16 @@ namespace TaskApp_API.Controllers
             var task = await _context.Tasks.FirstOrDefaultAsync(x => x.Id == id);
             if (task == null)
                 return NotFound();
-            
+
             _context.Tasks.Remove(task);
             await _context.SaveChangesAsync();
             return Ok(task);
         }
 
-        [HttpDelete("isdone/{isDone}")]
-        public async Task<IActionResult> DeleteTasks(bool IsDone)
+        [HttpDelete("isdone/{userId:int}/{isDone:bool}")]
+        public async Task<IActionResult> DeleteTasks(int userId, bool IsDone)
         {
-            _context.Tasks.RemoveRange(_context.Tasks.Where(x => x.IsDone == IsDone));
+            _context.Tasks.RemoveRange(_context.Tasks.Where(x => x.IsDone == IsDone && x.User.Id == userId));
             await _context.SaveChangesAsync();
             return Ok();
         }

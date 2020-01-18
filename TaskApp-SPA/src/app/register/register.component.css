@@ -1,0 +1,16 @@
+.registerForm{
+    width: 25%;
+    margin: auto;
+}
+
+.modalTextSize{
+    font-size: 25px;
+}
+
+.successModal{
+    color: green;
+}
+
+.failModal{
+    color: red;
+}

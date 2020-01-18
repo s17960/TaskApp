@@ -1,6 +1,4 @@
-<div>
-  <h1 class="text-center">
-    Twoja lista zadań
-  </h1>
-  <app-task class="text-center"></app-task>
-</div>
+<app-nav></app-nav>
+<br/>
+<app-task *ngIf="loggedIn()" class="text-center"></app-task>
+<app-register *ngIf="!loggedIn()"></app-register>

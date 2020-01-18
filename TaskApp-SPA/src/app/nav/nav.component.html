@@ -1,0 +1,39 @@
+<nav class="navbar navbar-expand-md navbar-dark bg-dark">
+  <a class="navbar-brand" href="#">Twoje zadania</a>
+
+  <div class="ml-auto">
+  <div *ngIf="loggedIn()" class="dropdown buttonGroup">
+    <div class="btn-group loggedDropdown" dropdown>
+      <button id="button-basic" dropdownToggle type="button" class="btn btn-primary dropdown-toggle"
+              aria-controls="dropdown-basic">
+        {{username}} <span class="caret"></span>
+      </button>
+      <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu"
+          role="menu" aria-labelledby="button-basic">
+        <li role="menuitem"><button class="dropdown-item" (click)="logout()">Logout</button></li>
+      </ul>
+    </div>
+  </div>
+
+  <form *ngIf="!loggedIn()" #loginForm="ngForm" class="form-inline my-2 my-lg-0" (ngSubmit)="login(template)">
+    <input class="form-control mr-sm-2" required name="username" type="text" placeholder="Login" req
+      [(ngModel)]="user.username">
+    <input class="form-control mr-sm-2" required name="password" type="password" placeholder="Hasło"
+      [(ngModel)]="user.password">
+    <button [disabled]="!loginForm.valid" class="btn btn-success my-2 my-sm-0" type="submit">Login</button>
+  </form>
+</div>
+</nav>
+
+
+<ng-template #template>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Uwaga</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body modalTextSize">
+    Błąd autoryzacji!
+  </div>
+</ng-template>

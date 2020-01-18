@@ -1,6 +1,7 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { Task } from '../_models/Task';
 import { TaskService } from '../_services/task.service';
+import { AuthService } from '../_services/auth.service';
 
 @Component({
   selector: 'app-task',
@@ -12,9 +13,17 @@ export class TaskComponent implements OnInit {
   toDoTasks: Task[];
   showDone = false;
 
-  constructor(private taskService: TaskService) {}
+  constructor(
+    private taskService: TaskService,
+    private authService: AuthService
+  ) {}
 
-  ngOnInit() {
+
+  ngOnInit(){
+
+  }
+
+  ngAfterViewInit() {
     this.getTasks();
   }
 

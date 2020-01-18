@@ -1,0 +1,30 @@
+<h1 class="text-center">Zarejestruj się</h1>
+<form #registerForm="ngForm" (ngSubmit)="register(template)" class="registerForm">
+  <hr>
+
+  <div class="form-group">
+    <input type="text" class="form-control" required name="username" [(ngModel)]="user.username" placeholder="Login">
+  </div>
+
+  <div class="form-group">
+    <input type="password" class="form-control" required name="password" [(ngModel)]="user.password"
+      placeholder="Hasło">
+  </div>
+
+  <div class="form-group text-center">
+    <button class="btn btn-success mr-2" type="submit">Zarejestruj</button>
+  </div>
+
+
+  <ng-template #template>
+    <div class="modal-header">
+      <h4 class="modal-title pull-left">Informacja</h4>
+      <button type="button" class="close pull-right" (click)="registerModal.hide()">
+        <span>&times;</span>
+      </button>
+    </div>
+    <p [class]="modalClass">
+      {{message}}
+    </p>
+  </ng-template>
+</form>

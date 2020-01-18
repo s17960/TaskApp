@@ -9,7 +9,7 @@
 <div *ngFor="let task of toDoTasks; let i = index">
   <div *ngIf="!task.isDone" class="font-italic taskText">
     <div *ngIf="!task.editMode" class="taskTextOnly">
-      {{ i + 1 }}.{{ task.taskText }}
+      {{ i + 1 }}. {{ task.taskText }}
     </div>
     <form *ngIf="task.editMode" class="taskInput" (ngSubmit)="changeTaskText(task.id, newTaskText)">
       <input required type="text" name="taskText" #taskText="ngModel" [(ngModel)]="newTaskText"
