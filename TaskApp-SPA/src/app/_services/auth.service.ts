@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { TaskService } from './task.service';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +13,7 @@ export class AuthService {
   jwtHelper = new JwtHelperService();
   decodedToken: any;
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private taskService: TaskService) {
   }
 
   login(model: any) {
@@ -22,6 +23,7 @@ export class AuthService {
         if (user) {
           localStorage.setItem('token', user.token);
           this.decodedToken = this.jwtHelper.decodeToken(user.token);
+          this.setUserId();
           console.log(this.decodedToken);
         }
       })
@@ -37,8 +39,8 @@ export class AuthService {
     return !this.jwtHelper.isTokenExpired(token);
   }
 
-  userId(){
-    return this.decodedToken.nameid;
+  setUserId(){
+    this.taskService.userId = this.decodedToken.nameid;
   }
 
   logout(){

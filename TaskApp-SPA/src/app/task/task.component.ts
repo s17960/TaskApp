@@ -20,10 +20,7 @@ export class TaskComponent implements OnInit {
 
 
   ngOnInit(){
-
-  }
-
-  ngAfterViewInit() {
+    this.authService.setUserId();
     this.getTasks();
   }
 

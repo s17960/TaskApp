@@ -12,11 +12,9 @@ export class TaskService {
   url = environment.url + 'task/';
   userId: number;
 
-  constructor(private http: HttpClient, private authService: AuthService) {
-  }
+  constructor(private http: HttpClient) {}
 
   getTasks() {
-    this.userId = this.authService.userId();
     return this.http.get<Task[]>(this.url + this.userId);
   }
 
@@ -29,10 +27,7 @@ export class TaskService {
   }
 
   changeTaskText(id: number, taskText: string) {
-    return this.http.put(
-      this.url + id + '/' + taskText,
-      null
-    );
+    return this.http.put(this.url + id + '/' + taskText, null);
   }
 
   deleteAllTasks(isDone: boolean) {

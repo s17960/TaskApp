@@ -20,7 +20,6 @@ export class AddTaskComponent implements OnInit {
       response => {
         this.addTaskEvent.emit(response);
         this.newTask = '';
-        console.log(response);
       },
       error => {
         console.log(error);
