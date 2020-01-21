@@ -1,4 +1,9 @@
-.modalTextSize{
-    font-size: 25px;
-    color: red;
+.modalTextSize {
+  font-size: 25px;
+  color: red;
+}
+
+.dropdown-menu {
+  right: -72px;
+  left: auto;
 }
