@@ -1,6 +1,7 @@
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { TaskService } from '../_services/task.service';
 import { Task } from '../_models/Task';
+import { AlertifyService } from '../_services/alertify.service';
 
 @Component({
   selector: 'app-todo-task',
@@ -12,7 +13,10 @@ export class TodoTaskComponent implements OnInit {
   @Output() reloadPage = new EventEmitter();
   newTaskText = '';
 
-  constructor(private taskService: TaskService) {}
+  constructor(
+    private taskService: TaskService,
+    private alertifyService: AlertifyService
+  ) {}
 
   ngOnInit() {}
 
@@ -21,6 +25,7 @@ export class TodoTaskComponent implements OnInit {
       this.taskService.setAllDone().subscribe(
         () => {
           this.reloadPage.emit();
+          this.alertifyService.warning('Wszystkie zadania zrobione!');
         },
         error => {
           console.log(error);
@@ -34,6 +39,7 @@ export class TodoTaskComponent implements OnInit {
       this.taskService.deleteAllTasks(false).subscribe(
         () => {
           this.reloadPage.emit();
+          this.alertifyService.error('Usunięto wszystkie zadania!');
         },
         error => {
           console.log(error);
@@ -65,6 +71,9 @@ export class TodoTaskComponent implements OnInit {
     this.taskService.deleteTask(id).subscribe(
       () => {
         this.reloadPage.emit();
+        this.alertifyService.error(
+          'Usunięto zadanie!' //+ this.toDoTasks.find(x => x.id == id).taskText
+        );
       },
       error => {
         console.log(error);
@@ -75,6 +84,7 @@ export class TodoTaskComponent implements OnInit {
   setTaskDone(id: number) {
     this.taskService.setTaskDone(id).subscribe(
       () => {
+        this.alertifyService.warning('Wykonano zadanie!');
         this.reloadPage.emit();
       },
       error => {

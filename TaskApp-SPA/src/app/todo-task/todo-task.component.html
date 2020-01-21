@@ -2,9 +2,14 @@
   Do zrobienia
 </h2>
 <br />
+<h3 class="nothingToDo" *ngIf="toDoTasks.length === 0">Nie masz nic do zrobienia!</h3>
 
-<app-confirmDone (accepted)="setAllDone($event)"></app-confirmDone>
-<app-confirmDelete (accepted)="deleteAllTodoTasks($event)"></app-confirmDelete>
+<div [style.visibility]="toDoTasks.length === 0 ? 'hidden' : 'visible'">
+  <app-confirmDone (accepted)="setAllDone($event)"></app-confirmDone>
+  <app-confirmDelete (accepted)="deleteAllTodoTasks($event)"></app-confirmDelete>
+</div>
+
+
 
 <div *ngFor="let task of toDoTasks; let i = index">
   <div *ngIf="!task.isDone" class="font-italic taskText">

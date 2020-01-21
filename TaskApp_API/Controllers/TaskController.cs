@@ -85,12 +85,9 @@ namespace TaskApp_API.Controllers
         }
 
         // PUT api/task/5
-        [HttpPut("{userId:int}/{taskId:int}/{taskText}")]
-        public async Task<IActionResult> UpdateTask(int userId, int taskId, string taskText)
+        [HttpPut("{taskId:int}/{taskText}")]
+        public async Task<IActionResult> UpdateTask(int taskId, string taskText)
         {
-            if(!IsUserAuthenticated(userId)){
-                return BadRequest();
-            }
 
             var updatedTask = _context.Tasks.FirstOrDefault(x => x.Id == taskId);
 

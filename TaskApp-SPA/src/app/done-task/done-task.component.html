@@ -3,8 +3,10 @@
 </h2>
 <br />
 
+<h3 class="nothingDone" *ngIf="doneTasks.length === 0">Lista wykonanych zadań jest pusta!</h3>
+
 <app-confirmDone [style.visibility]="'hidden'"></app-confirmDone>
-<app-confirmDelete (accepted)="deleteAllDoneTasks($event)"></app-confirmDelete>
+<app-confirmDelete [style.visibility]="doneTasks.length === 0 ? 'hidden' : 'visible'" (accepted)="deleteAllDoneTasks($event)"></app-confirmDelete>
 
 <div *ngFor="let task of doneTasks; let i = index">
   <div *ngIf="task.isDone" class="font-italic taskText">

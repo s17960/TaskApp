@@ -2,6 +2,7 @@ import { Component, OnInit, TemplateRef } from '@angular/core';
 import { AuthService } from '../_services/auth.service';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { TextFormatService } from '../_services/textFormat.service';
+import { AlertifyService } from '../_services/alertify.service';
 
 @Component({
   selector: 'app-nav',
@@ -16,7 +17,8 @@ export class NavComponent implements OnInit {
   constructor(
     public authService: AuthService,
     private modalService: BsModalService,
-    private textFormatService: TextFormatService
+    private textFormatService: TextFormatService,
+    private alertifyService: AlertifyService
   ) {}
 
   ngOnInit() {
@@ -34,10 +36,12 @@ export class NavComponent implements OnInit {
           this.user.username
         )
         this.username = this.user.username;
+        this.alertifyService.success('Zalogowałeś się!');
       },
       error => {
-        this.openModal(template);
+        //this.openModal(template);
         this.user.password = '';
+        this.alertifyService.error('Wystąpił problem')
       }
     );
   }
@@ -51,6 +55,7 @@ export class NavComponent implements OnInit {
 
     localStorage.removeItem('username');
     this.user = {};
+    this.alertifyService.message('Wylogowałeś się!');
   }
 
   openModal(template: TemplateRef<any>) {

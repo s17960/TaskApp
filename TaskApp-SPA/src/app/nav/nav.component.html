@@ -8,9 +8,9 @@
               aria-controls="dropdown-basic">
         {{username}} <span class="caret"></span>
       </button>
-      <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu"
+      <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu dropdown-menu-left"
           role="menu" aria-labelledby="button-basic">
-        <li role="menuitem"><button class="dropdown-item" (click)="logout()">Logout</button></li>
+        <li role="menuitem"><button class="dropdown-item" (click)="logout()">Wyloguj się</button></li>
       </ul>
     </div>
   </div>
@@ -20,7 +20,7 @@
       [(ngModel)]="user.username">
     <input class="form-control mr-sm-2" required name="password" type="password" placeholder="Hasło"
       [(ngModel)]="user.password">
-    <button [disabled]="!loginForm.valid" class="btn btn-success my-2 my-sm-0" type="submit">Login</button>
+    <button [disabled]="!loginForm.valid" class="btn btn-success my-2 my-sm-0" type="submit">Zaloguj się</button>
   </form>
 </div>
 </nav>

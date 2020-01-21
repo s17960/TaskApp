@@ -9,8 +9,8 @@ import { AuthService } from '../_services/auth.service';
   styleUrls: ['./task.component.css']
 })
 export class TaskComponent implements OnInit {
-  doneTasks: Task[];
-  toDoTasks: Task[];
+  doneTasks: Task[] = [];
+  toDoTasks: Task[] = [];
   showDone = false;
 
   constructor(
