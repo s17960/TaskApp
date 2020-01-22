@@ -9,7 +9,7 @@ using TaskApp_API.Data;
 namespace TaskApp_API.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20200118111236_UsersWithTasks")]
+    [Migration("20200122115039_UsersWithTasks")]
     partial class UsersWithTasks
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -32,7 +32,7 @@ namespace TaskApp_API.Migrations
                         .HasColumnType("TEXT")
                         .HasMaxLength(40);
 
-                    b.Property<int?>("UserId")
+                    b.Property<int>("UserId")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
@@ -66,7 +66,9 @@ namespace TaskApp_API.Migrations
                 {
                     b.HasOne("TaskApp_API.models.User", "User")
                         .WithMany("Tasks")
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

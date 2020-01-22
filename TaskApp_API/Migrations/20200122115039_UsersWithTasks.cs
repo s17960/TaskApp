@@ -30,7 +30,7 @@ namespace TaskApp_API.Migrations
                         .Annotation("Sqlite:Autoincrement", true),
                     TaskText = table.Column<string>(maxLength: 40, nullable: false),
                     IsDone = table.Column<bool>(nullable: false),
-                    UserId = table.Column<int>(nullable: true)
+                    UserId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -40,7 +40,7 @@ namespace TaskApp_API.Migrations
                         column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(

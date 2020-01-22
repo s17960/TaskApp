@@ -30,7 +30,7 @@ namespace TaskApp_API.Migrations
                         .HasColumnType("TEXT")
                         .HasMaxLength(40);
 
-                    b.Property<int?>("UserId")
+                    b.Property<int>("UserId")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
@@ -64,7 +64,9 @@ namespace TaskApp_API.Migrations
                 {
                     b.HasOne("TaskApp_API.models.User", "User")
                         .WithMany("Tasks")
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }
