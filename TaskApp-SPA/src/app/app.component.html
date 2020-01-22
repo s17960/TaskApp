@@ -1,4 +1,5 @@
 <app-nav></app-nav>
 <br/>
 <app-task *ngIf="loggedIn()" class="text-center"></app-task>
-<app-register *ngIf="!loggedIn()"></app-register>
+<app-home (registerEvent)="setRegisterMode(true)" *ngIf="!loggedIn() && !registerMode"></app-home>
+<app-register (cancelRegisterEvent)="setRegisterMode(false)" *ngIf="!loggedIn() && registerMode"></app-register>

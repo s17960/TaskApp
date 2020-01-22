@@ -18,6 +18,7 @@ import { TaskService } from './_services/task.service';
 import { NavComponent } from './nav/nav.component';
 import { RegisterComponent } from './register/register.component';
 import { AuthService } from './_services/auth.service';
+import { HomeComponent } from './home/home.component';
 
 export function tokenGetter() {
   return localStorage.getItem('token');
@@ -33,7 +34,8 @@ export function tokenGetter() {
     TodoTaskComponent,
     DoneTaskComponent,
     NavComponent,
-    RegisterComponent
+    RegisterComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,

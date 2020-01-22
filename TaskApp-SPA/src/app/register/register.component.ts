@@ -20,6 +20,7 @@ export class RegisterComponent implements OnInit {
   message: string;
   modalClassTemplate = 'modal-body modalTextSize ';
   modalClass: string;
+  @Output() cancelRegisterEvent = new EventEmitter<boolean>();
 
   constructor(
     private authService: AuthService,
@@ -37,6 +38,7 @@ export class RegisterComponent implements OnInit {
         this.modalClass = this.modalClassTemplate + 'successModal';
         this.openModal(template);
         this.user = {};
+        this.cancelRegisterEvent.emit(false);
       },
       error => {
         this.message = 'Niestety jest już taki użytkownik w bazie.';
@@ -49,5 +51,9 @@ export class RegisterComponent implements OnInit {
 
   openModal(template: TemplateRef<any>) {
     this.registerModal = this.modalService.show(template);
+  }
+
+  cancelRegister(){
+    this.cancelRegisterEvent.emit(false);
   }
 }

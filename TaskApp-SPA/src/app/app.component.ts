@@ -11,6 +11,7 @@ import { JwtHelperService } from '@auth0/angular-jwt'
 })
 export class AppComponent implements OnInit{
   jwtHelper = new JwtHelperService();
+  registerMode = false;
 
   constructor(private authService: AuthService){}
 
@@ -23,6 +24,10 @@ export class AppComponent implements OnInit{
 
   loggedIn(){
     return this.authService.loggedIn();
+  }
+
+  setRegisterMode(flag: boolean){
+    this.registerMode = flag;
   }
 }
 
